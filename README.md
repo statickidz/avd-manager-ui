@@ -1,3 +1,5 @@
+![AVD Manager UI](resources/screenshot.gif?raw=true)
+
 <p align="center">
 AVD Manager UI allows you to run Android Studio emulators externally.
 </p>
@@ -22,10 +24,6 @@ Build with <a href="http://electron.atom.io/">Electron</a>, <a href="https://fac
 [![Dependency Status][david_img]][david_site]
 [![DevDependency Status][david_img_dev]][david_site_dev]
 [![Github Tag][github-tag-image]][github-tag-url]
-</div>
-
-<div align="center">
-![AVD Manager UI](resources/screenshot.gif?raw=true)
 </div>
 
 ## Download
