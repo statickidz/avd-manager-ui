@@ -34,6 +34,12 @@ Build with <a href="http://electron.atom.io/">Electron</a>, <a href="https://fac
 
 Pending to add in release tab.
 
+## Platforms tested
+
+- [x] Windows 10 x64
+- [x] Mac OSX
+- [ ] Linux
+
 ## Install & Run
 
 First, clone the repo via git and install the depencencies with yarn:
@@ -104,7 +110,8 @@ DEBUG_PROD=true yarn package
 - [ ] Checker for ANDROID_HOME env variable
 - [ ] Display emulator details
 - [ ] Add app icon
-- [ ] Releases
+- [ ] Releases tab
+- [ ] Test in linux and adapt it
 
 ## Maintainers
 
