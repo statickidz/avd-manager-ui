@@ -1,0 +1,15 @@
+.root {
+  flex: 1;
+  height: 100%;
+  overflow: auto;
+  padding: 20px;
+}
+
+.row {
+  height: 60px !important;
+}
+
+.text {
+  font-size: 16;
+  padding: 10px 0;
+}
