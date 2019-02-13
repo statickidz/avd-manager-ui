@@ -22,28 +22,23 @@ AVD Manager UI allows you to run Android Studio emulators outside of it. Build w
 
 <div align="center">
 
-![Electron Boilerplate Demo](https://cloud.githubusercontent.com/assets/3382565/10557547/b1f07a4e-74e3-11e5-8d27-79ab6947d429.gif)
+![AVD Manager UI](https://cloud.githubusercontent.com/assets/3382565/10557547/b1f07a4e-74e3-11e5-8d27-79ab6947d429.gif)
 
 </div>
 
-## Install
+## Download
 
-- **If you have installation or compilation issues with this project, please see [our debugging guide](https://github.com/statickidz/avd-manager-ui/issues/400)**
+Pending to add in release tab.
 
-First, clone the repo via git:
+## Install & Run
 
-```bash
-git clone --depth 1 --single-branch --branch master https://github.com/statickidz/avd-manager-ui.git your-project-name
-```
-
-And then install the dependencies with yarn.
+First, clone the repo via git and install the depencencies with yarn:
 
 ```bash
-$ cd your-project-name
+$ git clone https://github.com/statickidz/avd-manager-ui.git
+$ cd avd-manager-ui
 $ yarn
 ```
-
-## Run
 
 Start the app in the `dev` environment. This starts the renderer process in [**hot-module-replacement**](https://webpack.js.org/guides/hmr-react/) mode and starts a webpack dev server that sends hot updates to the renderer process:
 
