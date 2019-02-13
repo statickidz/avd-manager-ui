@@ -25,7 +25,7 @@ Build with <a href="http://electron.atom.io/">Electron</a>, <a href="https://fac
 </div>
 
 <div align="center">
-![AVD Manager UI](resources/screenshot.gif)
+![AVD Manager UI](resources/screenshot.gif?raw=true)
 </div>
 
 ## Download
