@@ -67,7 +67,7 @@ export default class EmulatorLogs extends Component {
                 key={`tab-container-${emulator.id}`}
                 className={styles.tabContainer}
               >
-                {emulator.running ? emulator.logs : 'Stopped.'}
+                {emulator.logs !== '' ? emulator.logs : 'Not running.'}
               </div>
             )
           }
