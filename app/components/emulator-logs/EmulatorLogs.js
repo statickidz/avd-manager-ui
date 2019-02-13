@@ -40,8 +40,6 @@ export default class EmulatorLogs extends Component {
   }
 
   scrollToBottom() {
-    /*const el = document.getElementsByClassName('tabContainer')
-    console.log(el)*/
     if(this.logs.current){
       this.logs.current.scrollTop = this.logs.current.scrollHeight
     }
