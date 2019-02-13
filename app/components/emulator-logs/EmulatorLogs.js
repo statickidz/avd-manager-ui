@@ -9,7 +9,7 @@ import InputBase from '@material-ui/core/InputBase';
 import styles from './EmulatorLogs.css';
 
 export default class EmulatorLogs extends Component {
-  props = {
+  static propTypes = {
     emulators: PropTypes.array.isRequired,
   }
 

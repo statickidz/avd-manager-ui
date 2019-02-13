@@ -1,11 +1,11 @@
 // @flow
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { shell } from 'electron'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -18,19 +18,20 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import Slide from '@material-ui/core/Slide';
 import Link from '@material-ui/core/Link';
-
 import styles from './Header.css';
-
-type Props = {
-  title: string,
-}
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 
-export default class Header extends Component<Props> {
-  props: Props
+export default class Header extends Component {
+  static propTypes = {
+    title: PropTypes.string.isRequired,
+  }
+
+  static defaultProps = {
+    title: '',
+  }
 
   state = {
     aboutDialog: false,

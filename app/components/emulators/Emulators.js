@@ -31,10 +31,7 @@ const exec = (command) => {
     .catch(err => console.error(err))
 }
 
-type Props = {}
-
-export default class Emulators extends Component<Props> {
-  props: Props
+export default class Emulators extends Component {
   
   state = {
     sdkPath: null,
