@@ -176,7 +176,7 @@ export default class Emulators extends Component<Props> {
     const anyRunning = emulators.filter(em => em.running).length > 0 ? true : false
 
     return (
-      <div className={`root ${!anyRunning ? 'rootFull' : ''}`}>
+      <div className={styles.root}>
         <div className={styles.emulatorsContainer}>
           <Paper>
             {emulators.length > 0 ?
@@ -228,15 +228,13 @@ export default class Emulators extends Component<Props> {
           </Paper>
         </div>
 
-        {anyRunning &&
-          <AppBar position="fixed" className={styles.logsContainer}>
-            <EmulatorLogs
-              emulators={emulators}
-              anyRunning={anyRunning}
-              className={styles.logs}
-            />
-          </AppBar>
-        }
+        <AppBar position="fixed" className={styles.logsContainer}>
+          <EmulatorLogs
+            emulators={emulators}
+            anyRunning={anyRunning}
+            className={styles.logs}
+          />
+        </AppBar>
 
         <Dialog open={dialogVisible} onClose={() => this.handleToggleDialog()}>
           <DialogTitle>{dialogTitle}</DialogTitle>

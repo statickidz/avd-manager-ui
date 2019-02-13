@@ -9,8 +9,8 @@
   padding: 24px;
   height: 40vh;
   background-color: #1d1d1d;
-  font-family: 'Consolas; monaco; monospace';
-  font-size: 17px;
+  font-family: Consolas, monaco, monospace;
+  font-size: 15px;
   color: #cbcbcb !important;
   overflow: scroll;
   white-space: pre-line;

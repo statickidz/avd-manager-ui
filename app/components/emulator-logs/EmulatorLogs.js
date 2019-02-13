@@ -10,11 +10,17 @@ import styles from './EmulatorLogs.css';
 
 type Props = {
   emulators: array,
-  anyRunning: boolean,
+  active: boolean,
 }
 
-export default class EmulatorLogs extends Component<Props> {
-  props: Props
+export default class EmulatorLogs extends Component {
+  props = {
+    emulators: PropTypes.array.isRequired,
+  }
+
+  static defaultProps = {
+    emulators: {},
+  }
 
   state = {
     active: 0,
@@ -25,59 +31,55 @@ export default class EmulatorLogs extends Component<Props> {
     this.logs = React.createRef()
   }
 
-  handleChange = (event, active) => {
-    this.setState({ active })
-  }
-  
   componentDidUpdate() {
     this.scrollToBottom()
   }
 
+  handleChange = (event, active) => {
+    this.setState({ active })
+  }
+
   scrollToBottom() {
-    if(this.logs){
+    /*const el = document.getElementsByClassName('tabContainer')
+    console.log(el)*/
+    if(this.logs.current){
       this.logs.current.scrollTop = this.logs.current.scrollHeight
     }
   }
 
   render() {
-    const { emulators, anyRunning } = this.props
+    const { emulators } = this.props
     const { active } = this.state
 
-    if (anyRunning) {
-      return (
-        <div className={styles.root}>
-          <AppBar position="static" color="default">
-            <Tabs
-              value={active}
-              onChange={this.handleChange}
-              indicatorColor="primary"
-              textColor="primary"
-              scrollButtons="auto"
-            >
-              {emulators.map((emulator, index) => {
-                if (emulator.running) {
-                  return ( <Tab key={`tab-${emulator.id}`} label={emulator.name} /> )
-                }
-              })}
-            </Tabs>
-          </AppBar>
-          {emulators.map((emulator, index) => {
-            if (active === index && emulator.running) {
-              return (
-                <div
-                  ref={this.logs}
-                  key={`tab-container-${emulator.id}`}
-                  className={styles.tabContainer}
-                >
-                  {emulator.logs}
-                </div>
-              )
-            }
-          })}
-        </div>
-      )
-    } else {
-      return <div />
-    }
+    return (
+      <div className={styles.root}>
+        <AppBar position="static" color="default">
+          <Tabs
+            value={active}
+            onChange={this.handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            scrollButtons="auto"
+          >
+            {emulators.map((emulator, index) => {
+              return ( <Tab key={`tab-${emulator.id}`} label={(emulator.running ? ' ⬤ ' : ' ◯ ') + emulator.name} /> )
+            })}
+          </Tabs>
+        </AppBar>
+        {emulators.map((emulator, index) => {
+          if (active === index) {
+            return (
+              <div
+                ref={this.logs}
+                key={`tab-container-${emulator.id}`}
+                className={styles.tabContainer}
+              >
+                {emulator.running ? emulator.logs : 'Stopped.'}
+              </div>
+            )
+          }
+        })}
+      </div>
+    )
   }
 }
