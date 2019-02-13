@@ -1,6 +1,10 @@
 <p align="center">
-AVD Manager UI allows you to run Android Studio emulators outside of it. Build with <a href="http://electron.atom.io/">Electron</a>, <a href="https://facebook.github.io/react/">React</a>, <a href="https://github.com/reactjs/redux">Redux</a>, <a href="https://github.com/reactjs/react-router">React Router</a>, <a href="http://webpack.github.io/docs/">Webpack</a> and <a href="https://github.com/gaearon/react-hot-loader">React Hot Loader</a> for rapid application development (HMR).
+AVD Manager UI allows you to run Android Studio emulators externally.
 </p>
+
+This app is the work of a afternoon that I decided to switch from Genymotion to official Android Studio emulators for my React Native projects.
+
+Build with <a href="http://electron.atom.io/">Electron</a>, <a href="https://facebook.github.io/react/">React</a>, <a href="https://github.com/reactjs/redux">Redux</a>, <a href="https://github.com/reactjs/react-router">React Router</a>, <a href="http://webpack.github.io/docs/">Webpack</a> and <a href="https://github.com/gaearon/react-hot-loader">React Hot Loader</a> using <a href="https://github.com/electron-react-boilerplate">Electron React Boilerplate</a> for rapid application development (HMR).
 
 <div align="center">
 <br>
@@ -21,9 +25,9 @@ AVD Manager UI allows you to run Android Studio emulators outside of it. Build w
 </div>
 
 <div align="center">
-
+<!--
 ![AVD Manager UI](https://cloud.githubusercontent.com/assets/3382565/10557547/b1f07a4e-74e3-11e5-8d27-79ab6947d429.gif)
-
+-->
 </div>
 
 ## Download
@@ -92,6 +96,15 @@ $ yarn test-e2e
 ```bash
 DEBUG_PROD=true yarn package
 ```
+
+## TODO
+
+- [x] Display emulator
+- [x] Run emulators
+- [ ] Checker for ANDROID_HOME env variable
+- [ ] Display emulator details
+- [ ] Add app icon
+- [ ] Releases
 
 ## Maintainers
 
