@@ -1,8 +1,11 @@
 .root {
   flex: 1;
-  height: 100%;
   overflow: auto;
-  padding: 20px;
+  height: 50vh;
+}
+
+.rootFull {
+  height: 100vh;
 }
 
 .row {
@@ -12,4 +15,18 @@
 .text {
   font-size: 16;
   padding: 10px 0;
+}
+
+.emulatorsContainer {
+  padding: 20px 20px 90px 20px;
+}
+
+.logsContainer {
+  height: 50vh;
+  top: auto !important;
+  bottom: 0 !important;
+  background-color: transparent !important;
+}
+
+.logs {
 }

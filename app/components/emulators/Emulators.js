@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as child from 'child_process';
 import { promisify } from 'util';
-import * as shell from '../../shell/windows'
+import shell from '../../shell'
+import EmulatorLogs from '../emulator-logs/EmulatorLogs'
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -19,6 +20,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
+import AppBar from '@material-ui/core/AppBar';
 import styles from './Emulators.css';
 
 const exec = (command) => {
@@ -39,6 +41,24 @@ export default class Emulators extends Component<Props> {
     emulatorPath: null,
     emulators: [],
     dialogVisible: false,
+    dialogTitle: '',
+    dialogMessage: '',
+  }
+
+  timerID = null
+
+  async componentWillMount() {
+    await this.checkSDK()
+    await this.getEmulators()
+    this.timerID = setInterval(
+      () => this.getEmulators(),
+      5000
+    )
+    console.log(this.state)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID)
   }
 
   async checkSDK() {
@@ -52,29 +72,26 @@ export default class Emulators extends Component<Props> {
   async getEmulators() {
     const { emulatorPath } = this.state
     const emulators = await exec(emulatorPath + shell.EMULATORS_CMD)
-    const emulatorsArray = []
+    const emulatorsArray = this.state.emulators
     await emulators.split('\n').forEach(emulator => {
       const emulatorId = emulator.replace(new RegExp(' ', 'g'), '_')
-      emulatorsArray.push({
-        id: emulatorId,
-        name: emulator.replace(new RegExp('_', 'g'), ' '),
-        cmd: emulator,
-        running: false,
-        logs: '',
-        error: '',
-        process: null,
-      })
+      const exist = emulatorsArray.filter(em => em.id === emulatorId).length > 0 ? true : false
+      if (emulatorId && !exist) {
+        emulatorsArray.push({
+          id: emulatorId,
+          name: emulator.replace(new RegExp('_', 'g'), ' '),
+          cmd: emulator,
+          running: false,
+          logs: '',
+          error: '',
+          process: null,
+        })
+      }
     })
     await this.setState({ emulators: emulatorsArray })
   }
 
-  async componentWillMount() {
-    await this.checkSDK()
-    await this.getEmulators()
-    console.log(this.state)
-  }
-
-  async log(emulator, message) {
+  async logEmulator(emulator, message) {
     await this.setState({
       emulators: this.state.emulators.map(em => (em.id === emulator.id ? {
         ...em,
@@ -95,17 +112,27 @@ export default class Emulators extends Component<Props> {
   handleRunEmulator = async (emulator) => {
     const { emulatorPath } = this.state
     const runEmulatorCMD = `${emulatorPath}${shell.RUN_EMULATOR_CMD}${emulator.cmd}`
-    let instance = child.spawn(runEmulatorCMD, ['-logcat *:*', '-show-kernel'], { shell: true, detached: true })
+    process.stdout
+    let instance = child.spawn(
+      runEmulatorCMD,
+      ['-logcat *:*', '-show-kernel'],
+      { shell: true, detached: false }
+    )
     await this.updateEmulator(emulator, 'process', instance)
     await this.updateEmulator(emulator, 'running', true)
     console.log(this.state.emulators)
     instance.stdout.on('data', async data => {
-      await this.log(emulator, data.toString())
-      console.log('stdout data', data.toString(), emulator.id)
+      await this.logEmulator(emulator, data.toString())
+      //console.log('stdout data', data.toString(), emulator.id)
     })
     instance.stderr.on('data', async data => {
-      await this.log(emulator, data.toString())
-      console.log('stderr data', data.toString(), emulator.id)
+      await this.logEmulator(emulator, data.toString())
+      this.handleToggleDialog('Error', data.toString())
+      console.error('stderr data', data.toString(), emulator.id)
+    })
+    instance.on('event', async code => {
+      await this.updateEmulator(emulator, 'running', false)
+      console.log('close', code, emulator.id)
     })
     instance.on('close', async code => {
       await this.updateEmulator(emulator, 'running', false)
@@ -128,78 +155,97 @@ export default class Emulators extends Component<Props> {
 
   handleStopEmulator = async (emulator) => {
     console.log(emulator)
-    await emulator.process.kill('SIGHUP')
+    alert('Stopping emulators is not implemented yet. Please close emulator window to proceeed.')
   }
 
-  handleToggleAlert = () => {
-    this.setState({ dialogVisible: !this.state.dialogVisible })
+  handleToggleDialog = (title = '', message = '') => {
+    this.setState({
+      dialogVisible: !this.state.dialogVisible,
+      dialogTitle: title,
+      dialogMessage: message,
+    })
   }
 
   render() {
-    const { dialogVisible, emulators } = this.state
+    const {
+      dialogVisible,
+      dialogTitle,
+      dialogMessage, 
+      emulators
+    } = this.state
+    const anyRunning = emulators.filter(em => em.running).length > 0 ? true : false
 
     return (
-      <div className={styles.root}>
-        <Paper className={styles.emulators}>
-          {emulators.length > 0 ?
-            <Table className={styles.table}>
-              <TableHead>
-                <TableRow>
-                  <TableCell>AVD Devices</TableCell>
-                  <TableCell align="center">Actions</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {emulators.map(emulator => (
-                  <TableRow key={emulator.id} className={styles.row}>
-                    <TableCell component="th" scope="row">
-                      <Typography component="p" className={styles.text}>
-                        {emulator.name}
-                      </Typography>
-                    </TableCell>
-                    <TableCell align="center">
-                      {emulator.running ?
-                        <Fab
-                          size="small"
-                          color="secondary"
-                          className={styles.fab}
-                          onClick={() => this.handleStopEmulator(emulator)}
-                        >
-                          <i className="fa fa-stop" />
-                        </Fab>
-                      :
-                        <Fab
-                          size="small"
-                          color="primary"
-                          className={styles.fab}
-                          onClick={() => this.handleRunEmulator(emulator)}
-                        >
-                          <i className="fa fa-play" />
-                        </Fab>
-                      }
-                    </TableCell>
+      <div className={`root ${!anyRunning ? 'rootFull' : ''}`}>
+        <div className={styles.emulatorsContainer}>
+          <Paper>
+            {emulators.length > 0 ?
+              <Table className={styles.table}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>AVD Devices</TableCell>
+                    <TableCell align="center">Actions</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          :
-            <Typography component="p" align="center" className={styles.text}>
-              No emulators found.
-            </Typography>
-          }
-        </Paper>
+                </TableHead>
+                <TableBody>
+                  {emulators.map(emulator => (
+                    <TableRow key={emulator.id} className={styles.row}>
+                      <TableCell component="th" scope="row">
+                        <Typography component="p" className={styles.text}>
+                          {emulator.name}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="center">
+                        {emulator.running ?
+                          <Fab
+                            size="small"
+                            color="secondary"
+                            className={styles.fab}
+                            onClick={() => this.handleStopEmulator(emulator)}
+                          >
+                            <i className="fa fa-stop" />
+                          </Fab>
+                        :
+                          <Fab
+                            size="small"
+                            color="primary"
+                            className={styles.fab}
+                            onClick={() => this.handleRunEmulator(emulator)}
+                          >
+                            <i className="fa fa-play" />
+                          </Fab>
+                        }
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            :
+              <Typography component="p" align="center" className={styles.text}>
+                No emulators found.
+              </Typography>
+            }
+          </Paper>
+        </div>
 
-        <Dialog open={dialogVisible} onClose={this.handleToggleAlert}>
-          <DialogTitle>Alert</DialogTitle>
+        {anyRunning &&
+          <AppBar position="fixed" className={styles.logsContainer}>
+            <EmulatorLogs
+              emulators={emulators}
+              anyRunning={anyRunning}
+              className={styles.logs}
+            />
+          </AppBar>
+        }
+
+        <Dialog open={dialogVisible} onClose={() => this.handleToggleDialog()}>
+          <DialogTitle>{dialogTitle}</DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              Let Google help apps determine location. This means sending anonymous location data to
-              Google, even when no apps are running.
-            </DialogContentText>
+            <DialogContentText>{dialogMessage}</DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleToggleAlert} color="primary" autoFocus>
-              OK
+            <Button onClick={() => this.handleToggleDialog()} color="primary" autoFocus>
+              Close
             </Button>
           </DialogActions>
         </Dialog>

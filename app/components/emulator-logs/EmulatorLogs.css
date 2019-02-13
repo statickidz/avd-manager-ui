@@ -1,0 +1,17 @@
+.root {
+}
+
+.log {
+}
+
+.tabContainer {
+  flex: 1;
+  padding: 24px;
+  height: 40vh;
+  background-color: #1d1d1d;
+  font-family: 'Consolas; monaco; monospace';
+  font-size: 17px;
+  color: #cbcbcb !important;
+  overflow: scroll;
+  white-space: pre-line;
+}
