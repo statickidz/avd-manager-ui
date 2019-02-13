@@ -8,11 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import styles from './EmulatorLogs.css';
 
-type Props = {
-  emulators: array,
-  active: boolean,
-}
-
 export default class EmulatorLogs extends Component {
   props = {
     emulators: PropTypes.array.isRequired,
