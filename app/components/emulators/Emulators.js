@@ -109,11 +109,13 @@ export default class Emulators extends Component {
   handleRunEmulator = async (emulator) => {
     const { emulatorPath } = this.state
     const runEmulatorCMD = `${emulatorPath}${shell.RUN_EMULATOR_CMD}${emulator.cmd}`
-    process.stdout
     let instance = child.spawn(
       runEmulatorCMD,
       ['-logcat *:*', '-show-kernel'],
-      { shell: true, detached: false }
+      {
+        shell: true,
+        detached: false,
+      }
     )
     await this.updateEmulator(emulator, 'process', instance)
     await this.updateEmulator(emulator, 'running', true)
