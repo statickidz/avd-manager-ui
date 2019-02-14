@@ -47,10 +47,10 @@ export default class Emulators extends Component {
   async componentWillMount() {
     await this.checkSDK()
     await this.getEmulators()
-    /*this.timerID = setInterval(
+    this.timerID = setInterval(
       () => this.getEmulators(),
       5000
-    )*/
+    )
     console.log(this.state)
   }
 
@@ -70,15 +70,6 @@ export default class Emulators extends Component {
     const { emulatorPath } = this.state
     const emulators = await exec(emulatorPath + shell.EMULATORS_CMD)
     const emulatorsArray = this.state.emulators
-    emulatorsArray.push({
-      id: 'Pixel_2_API_25',
-      name: 'Pixel 2 API 25',
-      cmd: 'Pixel_2_API_25',
-      running: false,
-      logs: '',
-      error: '',
-      process: null,
-    })
     await emulators.split('\n').forEach(emulator => {
       const emulatorId = emulator.replace(new RegExp(' ', 'g'), '_')
       const exist = emulatorsArray.filter(em => em.id === emulatorId).length > 0 ? true : false
@@ -93,15 +84,6 @@ export default class Emulators extends Component {
           process: null,
         })
       }
-    })
-    emulatorsArray.push({
-      id: 'Pixel_API_28',
-      name: 'Pixel API 28',
-      cmd: 'Pixel_API_28',
-      running: false,
-      logs: '',
-      error: '',
-      process: null,
     })
     await this.setState({ emulators: emulatorsArray })
   }
