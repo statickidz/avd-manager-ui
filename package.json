@@ -1,7 +1,7 @@
 {
   "name": "avd-manager-ui",
   "productName": "AVD Manager UI",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "Electron application to use AVD Manager devices outside Android Studio.",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
