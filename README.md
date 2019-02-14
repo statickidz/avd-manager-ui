@@ -28,7 +28,7 @@ Build with <a href="http://electron.atom.io/">Electron</a>, <a href="https://fac
 
 ## Download
 
-Pending to add in release tab.
+**Download the latest version [here](https://github.com/statickidz/avd-manager-ui/releases/latest)**.
 
 ## Platforms tested
 
