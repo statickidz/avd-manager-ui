@@ -96,6 +96,10 @@ app.on('ready', async () => {
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
 
+  // Remove menu bar for now
+  mainWindow.setMenuBarVisibility(false);
+  mainWindow.setMenu(null);
+
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
   new AppUpdater();
