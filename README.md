@@ -1,7 +1,7 @@
-![AVD Manager UI](resources/screenshot.gif?raw=true)
-
 <p align="center">
-AVD Manager UI allows you to run Android Studio emulators externally.
+  <img src="resources/screenshot.png?raw=true">
+
+  AVD Manager UI allows you to run Android Studio emulators externally.
 </p>
 
 This app is the work of a afternoon that I decided to switch from Genymotion to official Android Studio emulators for my React Native projects.
