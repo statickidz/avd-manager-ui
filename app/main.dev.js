@@ -70,7 +70,10 @@ app.on('ready', async () => {
   mainWindow = new BrowserWindow({
     show: false,
     width: 600,
-    height: 700
+    height: 700,
+    webPreferences: {
+      nodeIntegration: true
+    },
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
