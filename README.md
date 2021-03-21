@@ -34,7 +34,7 @@ Build with <a href="http://electron.atom.io/">Electron</a>, <a href="https://fac
 
 - [x] Windows 10 x64
 - [x] Mac OSX
-- [ ] Linux
+- [x] Linux
 
 ## Install & Run
 
@@ -103,11 +103,11 @@ DEBUG_PROD=true yarn package
 
 - [x] Display emulator
 - [x] Run emulators
+- [x] Test in linux and adapt it
 - [ ] Checker for ANDROID_HOME env variable
 - [ ] Display emulator details
 - [ ] Add app icon
 - [ ] Releases tab
-- [ ] Test in linux and adapt it
 - [ ] Create emulators basic
 
 ## Maintainers
