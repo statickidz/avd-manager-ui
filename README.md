@@ -1,7 +1,8 @@
 <p align="center">
   <img src="resources/screenshot.png?raw=true">
 
-  AVD Manager UI allows you to run Android Studio emulators externally.
+AVD Manager UI allows you to run Android Studio emulators externally.
+
 </p>
 
 This app is the work of a afternoon that I decided to switch from Genymotion to official Android Studio emulators for my React Native projects.
@@ -24,6 +25,7 @@ Build with <a href="http://electron.atom.io/">Electron</a>, <a href="https://fac
 [![Dependency Status][david_img]][david_site]
 [![DevDependency Status][david_img_dev]][david_site_dev]
 [![Github Tag][github-tag-image]][github-tag-url]
+
 </div>
 
 ## Download
@@ -113,6 +115,10 @@ DEBUG_PROD=true yarn package
 ## Maintainers
 
 - [Adrián Barrio](https://github.com/statickidz)
+
+## Collaborators
+
+- [Jobs Gate](https://github.com/jobs-git)
 
 ## License
 
