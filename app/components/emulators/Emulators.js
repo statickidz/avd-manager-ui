@@ -34,8 +34,8 @@ const exec = (command) => {
 export default class Emulators extends Component {
   
   state = {
-    sdkPath: null,
-    emulatorPath: null,
+    sdkPath: 'echo $ANDROID_HOME',
+    emulatorPath: '/emulator/',
     emulators: [],
     dialogVisible: false,
     dialogTitle: '',
